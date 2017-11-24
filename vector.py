@@ -119,6 +119,36 @@ class Vector(object):
             else:
                 raise e
 
+    def cross(self, v):
+        '''向量积'''
+        try:
+            x_1, y_1, z_1 = self.coordinates
+            x_2, y_2, z_2 = v.coordinates
+            new_coordinates = [ y_1*z_2 - y_2*z_1 ,
+                              -(x_1*z_2 - x_2*z_1),
+                                x_1*y_2 - x_2*y_1 ]
+            return Vector(new_coordinates)
+        except ValueError as e:
+            msg = str(e)
+            if msg == 'need more than 2 values to unpack':
+                self_embedded_in_R3 = Vector(self.coordinates + ('0',))
+                v_embedded_in_R3 = Vector(v.coordinates + ('0',))
+                return self_embedded_in_R3.cross(v_embedded_in_R3)
+            elif (msg == 'too many values to unpack' or
+                  msg == 'need more than 1 value to unpack'):
+                raise Exception('......') # TODO:
+            else:
+                raise e
+
+    def area_of_parallelogram_with(self, v):
+        '''平行四边形面积'''
+        cross_product = self.cross(v)
+        return cross_product.magnitude()
+
+    def area_of_triangle_with(self, v):
+        '''三角形面积'''
+        return self.area_of_parallelogram_with(v) / 2
+
 
     def __str__(self):
         return 'Vector: {}'.format(self.coordinates)

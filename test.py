@@ -144,7 +144,7 @@ class LinearRegressionTestCase(unittest.TestCase):
                 self.assertEqual(np.array(x).shape,(r,1),"Expected shape({},1), but got shape{}".format(r,np.array(x).shape))
                 Ax = np.dot(A,np.array(x))
                 loss = np.mean((Ax - b)**2)
-                print 'loss', loss
+                # print 'loss', loss
                 self.assertTrue(loss<0.1,"Bad result.")
 
 if __name__ == '__main__':

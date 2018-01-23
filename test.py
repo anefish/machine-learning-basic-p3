@@ -50,16 +50,16 @@ class LinearRegressionTestCase(unittest.TestCase):
 
         for _ in range(100):
             r,d,c = np.random.randint(low=1,high=25,size=3)
-            mat1 = np.random.randint(low=-10,high=10,size=(r,d)) 
-            mat2 = np.random.randint(low=-5,high=5,size=(d,c)) 
+            mat1 = np.random.randint(low=-10,high=10,size=(r,d))
+            mat2 = np.random.randint(low=-5,high=5,size=(d,c))
             dotProduct = np.dot(mat1,mat2)
 
             dp = np.array(matxMultiply(mat1.tolist(),mat2.tolist()))
 
             self.assertTrue((dotProduct == dp).all(),'Wrong answer')
 
-        mat1 = np.random.randint(low=-10,high=10,size=(r,5)) 
-        mat2 = np.random.randint(low=-5,high=5,size=(4,c)) 
+        mat1 = np.random.randint(low=-10,high=10,size=(r,5))
+        mat2 = np.random.randint(low=-5,high=5,size=(4,c))
         with self.assertRaises(ValueError,msg="Matrix A\'s column number doesn\'t equal to Matrix b\'s row number"):
         	matxMultiply(mat1.tolist(),mat2.tolist())
 
@@ -110,7 +110,7 @@ class LinearRegressionTestCase(unittest.TestCase):
             matrix[rr] *= scale
 
             self.assertTrue((matrix == np.array(mat)).all(),'Wrong answer')
-    
+
     def test_addScaledRow(self):
 
         for _ in range(10):
@@ -144,6 +144,7 @@ class LinearRegressionTestCase(unittest.TestCase):
                 self.assertEqual(np.array(x).shape,(r,1),"Expected shape({},1), but got shape{}".format(r,np.array(x).shape))
                 Ax = np.dot(A,np.array(x))
                 loss = np.mean((Ax - b)**2)
+                print 'loss', loss
                 self.assertTrue(loss<0.1,"Bad result.")
 
 if __name__ == '__main__':

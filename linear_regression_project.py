@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[3]:
+# In[1]:
 
 
 # 任意选一个你喜欢的整数，这能帮你得到稳定的结果
@@ -20,7 +20,7 @@ seed = 9999
 # 
 # ## 1.1 创建一个 4*4 的单位矩阵
 
-# In[4]:
+# In[23]:
 
 
 # 这个项目设计来帮你熟悉 python list 和线性代数
@@ -42,15 +42,15 @@ C = [[1],
      [3]]
 
 #TODO 创建一个 4*4 单位矩阵
-I = [[1,2,3,4],
-     [2,2,3,4],
-     [3,2,3,4],
-     [4,2,3,4]]
+I = [[1,0,0,0],
+     [0,1,0,0],
+     [0,0,1,0],
+     [0,0,0,1]]
 
 
 # ## 1.2 返回矩阵的行数和列数
 
-# In[5]:
+# In[3]:
 
 
 # TODO 返回矩阵的行数和列数
@@ -58,7 +58,7 @@ def shape(M):
     return len(M),len(M[0])
 
 
-# In[6]:
+# In[4]:
 
 
 # 运行以下代码测试你的 shape 函数
@@ -67,7 +67,7 @@ get_ipython().magic(u'run -i -e test.py LinearRegressionTestCase.test_shape')
 
 # ## 1.3 每个元素四舍五入到特定小数数位
 
-# In[7]:
+# In[5]:
 
 
 # TODO 每个元素四舍五入到特定小数数位
@@ -78,7 +78,7 @@ def matxRound(M, decPts=4):
             M[rowIndex][colIndex] = round(M[rowIndex][colIndex], decPts)
 
 
-# In[8]:
+# In[6]:
 
 
 # 运行以下代码测试你的 matxRound 函数
@@ -87,25 +87,27 @@ get_ipython().magic(u'run -i -e test.py LinearRegressionTestCase.test_matxRound'
 
 # ## 1.4 计算矩阵的转置
 
-# In[9]:
+# In[47]:
 
 
 # TODO 计算矩阵的转置
 def transpose(M):
-    oldRows = len(M)
-    oldCols = len(M[0])
-    newM = []
+#     oldRows = len(M)
+#     oldCols = len(M[0])
+#     newM = []
     
-    for colIndex in range(oldCols):
-        newRow = []
-        for rowIndex in range(oldRows):
-            newRow.append(M[rowIndex][colIndex])
-        newM.append(newRow)
+#     for colIndex in range(oldCols):
+#         newRow = []
+#         for rowIndex in range(oldRows):
+#             newRow.append(M[rowIndex][colIndex])
+#         newM.append(newRow)
     
-    return newM
+#     return newM
+
+    return [col for col in zip(*M)]
 
 
-# In[10]:
+# In[48]:
 
 
 # 运行以下代码测试你的 transpose 函数
@@ -114,7 +116,7 @@ get_ipython().magic(u'run -i -e test.py LinearRegressionTestCase.test_transpose'
 
 # ## 1.5 计算矩阵乘法 AB
 
-# In[11]:
+# In[9]:
 
 
 # TODO 计算矩阵乘法 AB，如果无法相乘则raise ValueError
@@ -137,7 +139,7 @@ def matxMultiply(A, B):
             
 
 
-# In[12]:
+# In[10]:
 
 
 # 运行以下代码测试你的 matxMultiply 函数
@@ -171,21 +173,23 @@ get_ipython().magic(u'run -i -e test.py LinearRegressionTestCase.test_matxMultip
 #     ...    & ... & ... & ...& ...\\
 #     a_{n1}    & a_{n2} & ... & a_{nn} & b_{n} \end{bmatrix}$
 
-# In[13]:
+# In[53]:
 
 
 # TODO 构造增广矩阵，假设A，b行数相同
 def augmentMatrix(A, b):
-    Ab = []
-    for index in range(len(A)):
-        ab = []
-        ab.extend(A[index])
-        ab.extend(b[index])
-        Ab.append(ab)
-    return Ab
+#     Ab = []
+#     for index in range(len(A)):
+#         ab = []
+#         ab.extend(A[index])
+#         ab.extend(b[index])
+#         Ab.append(ab)
+#     return Ab
+
+    return [ra + rb for ra, rb in zip(A, b)]
 
 
-# In[14]:
+# In[54]:
 
 
 # 运行以下代码测试你的 augmentMatrix 函数
@@ -197,25 +201,27 @@ get_ipython().magic(u'run -i -e test.py LinearRegressionTestCase.test_augmentMat
 # - 把某行乘以一个非零常数
 # - 把某行加上另一行的若干倍：
 
-# In[15]:
+# In[55]:
 
 
 # TODO r1 <---> r2
 # 直接修改参数矩阵，无返回值
 def swapRows(M, r1, r2):
-    temp = M[r1]
-    M[r1] = M[r2]
-    M[r2] = temp
+#     temp = M[r1]
+#     M[r1] = M[r2]
+#     M[r2] = temp
+
+    M[r1], M[r2] = M[r2], M[r1]
 
 
-# In[16]:
+# In[56]:
 
 
 # 运行以下代码测试你的 swapRows 函数
 get_ipython().magic(u'run -i -e test.py LinearRegressionTestCase.test_swapRows')
 
 
-# In[17]:
+# In[15]:
 
 
 # TODO r1 <--- r1 * scale
@@ -230,14 +236,14 @@ def scaleRow(M, r, scale):
         raise e
 
 
-# In[18]:
+# In[16]:
 
 
 # 运行以下代码测试你的 scaleRow 函数
 get_ipython().magic(u'run -i -e test.py LinearRegressionTestCase.test_scaleRow')
 
 
-# In[19]:
+# In[17]:
 
 
 # TODO r1 <--- r1 + r2*scale
@@ -251,7 +257,7 @@ def addScaledRow(M, r1, r2, scale):
         raise e
 
 
-# In[20]:
+# In[18]:
 
 
 # 运行以下代码测试你的 addScaledRow 函数
@@ -324,7 +330,7 @@ get_ipython().magic(u'run -i -e test.py LinearRegressionTestCase.test_addScaledR
 
 # #### 以下开始你的尝试吧!
 
-# In[21]:
+# In[19]:
 
 
 # 不要修改这里！
@@ -354,20 +360,20 @@ printInMatrixFormat(Ab,padding=3,truncating=0)
 # $ --> \begin{bmatrix}
 #     1 & \frac{5}{7} & \frac{3}{7} & \frac{1}{7} \\
 #     0 & -\frac{3}{7} & \frac{57}{7} & \frac{12}{7} \\
-#     0 & -\frac{33}{7} & -\frac{81}{7} & \frac{5}{7} \end{bmatrix}$
+#     0 & -\frac{24}{7} & -\frac{69}{7} & \frac{5}{7} \end{bmatrix}$
 #     
 # $ --> \begin{bmatrix}
-#     1 & 0 & -\frac{102}{77} & \frac{58}{231} \\
-#     0 & 1 & \frac{27}{11} & -\frac{5}{33} \\
-#     0 & 0 & \frac{57}{7} & \frac{127}{77} \end{bmatrix}$
+#     1 & 0 & -\frac{91}{56} & \frac{7}{24} \\
+#     0 & 1 & \frac{23}{8} & -\frac{5}{24} \\
+#     0 & 0 & \frac{75}{8} & \frac{13}{8} \end{bmatrix}$
 #     
 # $ --> \begin{bmatrix}
-#     1 & 0 & 0 & \frac{25076}{48279} \\
-#     0 & 1 & 0 & -\frac{4474}{6897} \\
-#     0 & 0 & 1 & \frac{127}{627} \end{bmatrix}$
+#     1 & 0 & 0 & \frac{43}{75} \\
+#     0 & 1 & 0 & -\frac{53}{75} \\
+#     0 & 0 & 1 & \frac{13}{75} \end{bmatrix}$
 # 
 
-# In[22]:
+# In[20]:
 
 
 # 不要修改这里！
@@ -407,7 +413,7 @@ printInMatrixFormat(Ab,padding=3,truncating=0)
 
 # ### 2.3.3 实现 Gaussian Jordan 消元法
 
-# In[25]:
+# In[21]:
 
 
 # TODO 实现 Gaussain Jordan 方法求解 Ax = b
@@ -461,9 +467,7 @@ def gj_Solve(A, b, decPts=4, epsilon = 1.0e-16):
     matxRound(Ab, decPts)
 #     print 'round', Ab
     
-    x = []
-    for i in range(rows):
-        x.append([Ab[i][rows]])
+    x = [[Ab[i][rows]] for i in range(rows)]
 #     print 'x', x
     
     return x
@@ -471,7 +475,7 @@ def gj_Solve(A, b, decPts=4, epsilon = 1.0e-16):
     
 
 
-# In[27]:
+# In[22]:
 
 
 # 运行以下代码测试你的 gj_Solve 函数
